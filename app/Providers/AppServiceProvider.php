@@ -4,6 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Blade;
+use Session;
+use Illuminate\Pagination\Paginator;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -22,7 +25,15 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
+    {   
+        Paginator::useBootstrap();
         Schema::defaultStringLength(191);
+        Blade::directive('toastr', function ($expression) {
+
+            return "<script>
+                    toastr.{{ Session::get('alert-type') }}($expression)
+                 </script>";
+        });
+
     }
 }

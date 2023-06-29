@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use DataTables;
 class CategoryController extends Controller
 {
     /**
@@ -12,9 +14,44 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(Request $request)
+    {   
+
+        try
+        {
+            if($request->ajax())
+            {
+                $categories = Category::latest()->select('*');
+                    return Datatables::of($categories)
+                            ->addIndexColumn()
+                            ->addColumn('action', function($row){
+
+                                $btn = '';
+                                 
+
+                                $btn .= ' <a href="'.route('categories.show',$row->id).'" class="btn btn-primary btn-sm action-button"><i class="fa fa-edit"></i></a>';
+
+                                
+
+                                  $btn .= ' <a href="#" class="btn btn-danger btn-sm delete-category action-button" data-id="'.$row->id.'"><i class="fa fa-trash"></i></a>'; 
+            
+                                    return $btn;
+                            })
+                            ->rawColumns(['action'])
+                            ->make(true); 
+                }
+            
+            return view('categories.index');
+        }catch(Exception $e){
+                  
+                $message = $e->getMessage();
+      
+                $code = $e->getCode();       
+      
+                $string = $e->__toString();       
+                return response()->json(['message'=>$message, 'execption_code'=>$code, 'execption_string'=>$string]);
+                exit;
+        }
     }
 
     /**
@@ -33,9 +70,27 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+        try
+        {
+            Category::create($request->all());
+             $notification=array(
+                             'messege'=>'Successfully category has been added',
+                             'alert-type'=>'success'
+                            );
+
+                   return redirect()->back()->with($notification);
+        }catch(Exception $e){
+                  
+                $message = $e->getMessage();
+      
+                $code = $e->getCode();       
+      
+                $string = $e->__toString();       
+                return response()->json(['message'=>$message, 'execption_code'=>$code, 'execption_string'=>$string]);
+                exit;
+        }
     }
 
     /**
@@ -46,7 +101,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -67,9 +122,27 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        try
+        {
+           $category->update($request->all());
+           $notification=array(
+                             'messege'=>'Successfully category has been updated',
+                             'alert-type'=>'success'
+                            );
+
+                   return redirect('/categories')->with($notification);
+        }catch(Exception $e){
+                  
+                $message = $e->getMessage();
+      
+                $code = $e->getCode();       
+      
+                $string = $e->__toString();       
+                return response()->json(['message'=>$message, 'execption_code'=>$code, 'execption_string'=>$string]);
+                exit;
+        }
     }
 
     /**
@@ -80,6 +153,19 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try
+        {
+            $category->delete();
+            return response()->json('Successfully category has been deleted');
+        }catch(Exception $e){
+                  
+                $message = $e->getMessage();
+      
+                $code = $e->getCode();       
+      
+                $string = $e->__toString();       
+                return response()->json(['message'=>$message, 'execption_code'=>$code, 'execption_string'=>$string]);
+                exit;
+        }
     }
 }

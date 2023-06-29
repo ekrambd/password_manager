@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -12,6 +13,17 @@
   <link href="{{asset('back/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{asset('back/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{asset('back/css/ruang-admin.min.css')}}" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{asset('toastr/toastr.css')}}">
+
+  <!-- Data Table Css -->
+    <link rel="stylesheet" type="text/css" href="{{asset('back/datatable/css/dataTables.bootstrap4.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{asset('back/datatable/css/buttons.dataTables.min.css')}}">
+    
+    <link rel="stylesheet" type="text/css" href="{{asset('back/datatable/css/responsive.bootstrap4.min.css')}}">
+  
+     <link rel="stylesheet" href="{{asset('custom/style.css')}}">
 </head>
 
 <body id="page-top">
@@ -179,6 +191,30 @@
   <script src="{{asset('back/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{asset('back/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
   <script src="{{asset('back/js/ruang-admin.min.js')}}"></script> 
+  
+  <script src="{{asset('back/custom.js')}}"></script>
+
+  <script src="{{asset('toastr/toastr.js')}}"></script>
+
+  <!-- data-table js -->
+    <script src="{{asset('back/datatable/js/jquery.dataTables.min.js')}}"></script>
+
+    <script src="{{asset('back/datatable/js/dataTables.buttons.min.js')}}"></script>
+
+
+
+    <script src="{{asset('back/datatable/js/dataTables.bootstrap4.min.js')}}"></script>
+
+    <script src="{{asset('back/datatable/js/dataTables.responsive.min.js')}}"></script>
+
+    <script src="{{asset('back/datatable/js/responsive.bootstrap4.min.js')}}"></script>
+
+    <script src="{{asset('back/datatable/js/data-table-custom.js')}}"></script>
+
+  @if(Session::has('messege'))
+    @toastr("{{ Session::get('messege') }}")
+  @endif
+
 </body>
 
 </html>
