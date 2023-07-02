@@ -8,6 +8,6 @@ class IndexController extends Controller
 {
     public function indexPage()
     {
-    	return view('layouts.app');
+    	return view('admin_login');
     }
 }

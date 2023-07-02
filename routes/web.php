@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AccessController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,5 +19,24 @@ use App\Http\Controllers\CategoryController;
 
 Route::get('/', [IndexController::class, 'indexPage']);
 
-//categories
-Route::resource('categories', CategoryController::class);
+Route::post('admin-login', [AccessController::class, 'adminLogin']);
+
+Route::get('/logout', [AccessController::class, 'Logout']);
+
+
+Route::group(['middleware' => 'prevent-back-history'],function(){
+
+
+	//admin dashboard
+
+    Route::get('/dashboard', [DashboardController::class, 'Dashboard']);
+
+	//categories
+	Route::resource('categories', CategoryController::class);
+
+	//categories
+	Route::resource('password', PasswordController::class);
+
+
+});
+

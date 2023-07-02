@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Password;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\StorePasswordRequest;
 class PasswordController extends Controller
 {
     /**
@@ -24,7 +24,7 @@ class PasswordController extends Controller
      */
     public function create()
     {
-        //
+        return view('password.create');
     }
 
     /**
@@ -33,9 +33,21 @@ class PasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePasswordRequest $request)
     {
-        //
+        try
+        {
+
+        }catch(Exception $e){
+                  
+                $message = $e->getMessage();
+      
+                $code = $e->getCode();       
+      
+                $string = $e->__toString();       
+                return response()->json(['message'=>$message, 'execption_code'=>$code, 'execption_string'=>$string]);
+                exit;
+        }
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('master')
+@extends('admin_master')
 @section('content')
 <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">

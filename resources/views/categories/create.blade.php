@@ -1,4 +1,4 @@
-@extends('master')
+@extends('admin_master')
 @section('content')
  
  <div class="container-fluid" id="container-wrapper">
@@ -21,7 +21,7 @@
                   <form action="{{route('categories.store')}}" method="POST">
                   	@csrf
                     <div class="form-group">
-                      <label for="category_name">Category Name</label>
+                      <label for="category_name">Category Name <span class="required">*</span></label>
                       <input type="text" class="form-control" name="category_name" id="category_name" aria-describedby="category_name"
                         placeholder="Category Name" value="{{old('category_name')}}" required="">
                      @error('category_name')

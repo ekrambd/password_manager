@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link href="{{asset('back/img/logo/logo.png')}}" rel="icon">
-  <title>RuangAdmin - Dashboard</title>
+  <title>Admin | Dashboard</title>
   <link href="{{asset('back/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{asset('back/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{asset('back/css/ruang-admin.min.css')}}" rel="stylesheet">
@@ -61,39 +61,21 @@
           </div>
         </div>
       </li>
+      
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
-          aria-controls="collapseForm">
-          <i class="fab fa-fw fa-wpforms"></i>
-          <span>Forms</span>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true"
+          aria-controls="collapsePage">
+          <i class="fas fa-fw fa-columns"></i>
+          <span>Password</span>
         </a>
-        <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+        <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Forms</h6>
-            <a class="collapse-item" href="form_basics.html">Form Basics</a>
-            <a class="collapse-item" href="form_advanceds.html">Form Advanceds</a>
+            <h6 class="collapse-header">Password</h6>
+            <a class="collapse-item" href="{{route('password.create')}}">Add Password</a>
+            <a class="collapse-item" href="{{route('password.index')}}">All Password</a>
+            
           </div>
         </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTable" aria-expanded="true"
-          aria-controls="collapseTable">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span>
-        </a>
-        <div id="collapseTable" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Tables</h6>
-            <a class="collapse-item" href="simple-tables.html">Simple Tables</a>
-            <a class="collapse-item" href="datatables.html">DataTables</a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="ui-colors.html">
-          <i class="fas fa-fw fa-palette"></i>
-          <span>UI Colors</span>
-        </a>
       </li>
       <hr class="sidebar-divider">
       <div class="sidebar-heading">
@@ -154,7 +136,7 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="{{URL::to('/logout')}}">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>

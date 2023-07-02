@@ -44,6 +44,9 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'auth_check' => [
+            \App\Http\Middleware\AuthCheckMiddleware::class,
+        ]
     ];
 
     /**
@@ -62,6 +65,7 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 }
