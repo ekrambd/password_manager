@@ -75,8 +75,8 @@
                   	  	  	      </div>
                   	  	  	     @endforeach
                                   @error('category_id')
-                           <p class="alert alert-danger">{{ $message }}</p>
-                         @enderror
+                                   <p class="alert alert-danger">{{ $message }}</p>
+                                 @enderror
                   	  	  	    </div>
                   	  	  	   
                   	  	  	</div>

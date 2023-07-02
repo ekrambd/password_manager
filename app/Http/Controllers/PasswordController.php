@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Password;
 use Illuminate\Http\Request;
-use App\Http\Requests\StorePasswordRequest;
+use App\Http\Requests\StorePasswordRequest; 
+use DataTables;
 class PasswordController extends Controller
 {
     /**
@@ -12,9 +13,48 @@ class PasswordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        try
+        {
+            if($request->ajax())
+            {
+                $passwords = Password::latest()->select('*');
+                    return Datatables::of($passwords)
+                            ->addIndexColumn()
+                            ->addColumn('show_password', function($row){
+
+                                return '<a href="#" class="badge badge-info p-2 show-password" data-id="'.$row->id.'">Show password</a>';
+
+                            })
+                            ->addColumn('action', function($row){
+
+                                $btn = '';
+                                 
+
+                                $btn .= ' <a href="'.route('password.show',$row->id).'" class="btn btn-primary btn-sm action-button">Edit</a>';
+
+                                
+
+                                  $btn .= ' <a href="#" class="btn btn-danger btn-sm delete-category action-button" data-id="'.$row->id.'">Delete</a>'; 
+            
+                                    return $btn;
+                            })
+                            ->rawColumns(['action', 'show_password'])
+                            ->make(true); 
+                }
+            
+            return view('password.index');
+        }catch(Exception $e){
+                  
+                $message = $e->getMessage();
+      
+                $code = $e->getCode();       
+      
+                $string = $e->__toString();       
+                return response()->json(['message'=>$message, 'execption_code'=>$code, 'execption_string'=>$string]);
+                exit;
+        }
     }
 
     /**
@@ -37,7 +77,21 @@ class PasswordController extends Controller
     {
         try
         {
+            $password = new Password();
+            $password->title = $request->title;
+            $password->user_name = $request->user_name;
+            $password->general_password = $request->password;
+            $password->encrypt_password = bcrypt($request->password);
+            $password->save();
 
+            storeCategories($request, $password);
+
+            $notification=array(
+                             'messege'=>'Successfully password has been added',
+                             'alert-type'=>'success'
+                            );
+
+                   return redirect()->back()->with($notification);
         }catch(Exception $e){
                   
                 $message = $e->getMessage();

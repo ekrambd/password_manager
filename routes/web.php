@@ -40,3 +40,5 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 
 });
 
+
+Route::get('show-password', [IndexController::class, 'showPasssword']);

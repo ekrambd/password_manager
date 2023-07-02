@@ -30,4 +30,11 @@ class StorePasswordRequest extends FormRequest
             'category_id' => 'required|array|min:1',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'category_id.required' => 'Please select at least one cateogory',       
+        ];
+    }
 }

@@ -30,6 +30,32 @@ $(document).ready(function(){
     });
 
 
+   var passwordTable = $('#password-table').DataTable({
+        searching: true,
+        processing: true,
+        serverSide: true,
+        ordering: false,
+        stateSave: true,
+        ajax: {
+          url: base_url+"/password", 
+        },
+
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            {data: 'title', name: 'title'},
+            {data: 'user_name', name: 'user_name'},
+            {data: 'show_password', name: 'show_password'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ]
+    });
+
+   $(document).on('click', '.show-password', function(e){
+      e.preventDefault();
+      var int_password_id = $(this).data('id');
+      alert(int_password_id);
+   });
+
+
 
    $(document).on('click', '.delete-category', function(e){
        e.preventDefault();
