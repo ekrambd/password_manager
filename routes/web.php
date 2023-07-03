@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\AjaxController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,8 @@ use App\Http\Controllers\PasswordController;
 */
 
 Route::get('/', [IndexController::class, 'indexPage']);
+
+Route::get('/get-password', [IndexController::class, 'getPassword']);
 
 Route::post('admin-login', [AccessController::class, 'adminLogin']);
 
@@ -41,4 +44,6 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 });
 
 
-Route::get('show-password', [IndexController::class, 'showPasssword']);
+//ajax requests
+Route::post('setup-2fa', [AjaxController::class, 'setupAuthenticator']);
+Route::post('2fa-verify', [AjaxController::class, 'twofaVerify']);

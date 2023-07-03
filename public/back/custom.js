@@ -52,7 +52,20 @@ $(document).ready(function(){
    $(document).on('click', '.show-password', function(e){
       e.preventDefault();
       var int_password_id = $(this).data('id');
-      alert(int_password_id);
+      
+      $('#google-2fa').modal('show');
+      ajax_url = base_url+"/setup-2fa";
+            $.ajax({
+
+                 url: ajax_url,
+                 type:"POST",
+                 dataType:"html",
+                 success:function(data) {
+                    $('#google-2fa-body').html(data);  
+                    $('.password_id').val(int_password_id);
+                 },
+                        
+            });
    });
 
 
@@ -78,6 +91,26 @@ $(document).ready(function(){
             });
        }
   });
+
+   $(document).on('submit', '#2fa-submit', function(e){
+     
+      e.preventDefault();
+      var two_fa = $('.2fa_code').val();
+      var get_password_id = $('.password_id').val();
+      ajax_url = base_url+"/2fa-verify";
+            $.ajax({
+
+                 url: ajax_url,
+                 type:"POST",
+                 data:{'password_id':get_password_id, 'one_time_password': two_fa},
+                 dataType:"json",
+                 success:function(data) {
+                    console.log(data);
+     
+                 },
+                        
+            });
+   });
 
 
 

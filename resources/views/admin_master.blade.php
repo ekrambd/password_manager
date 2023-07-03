@@ -82,12 +82,12 @@
         Examples
       </div>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePage" aria-expanded="true"
-          aria-controls="collapsePage">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustom" aria-expanded="true"
+          aria-controls="collapseCustom">
           <i class="fas fa-fw fa-columns"></i>
           <span>Pages</span>
         </a>
-        <div id="collapsePage" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
+        <div id="collapseCustom" class="collapse" aria-labelledby="headingPage" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Example Pages</h6>
             <a class="collapse-item" href="login.html">Login</a>
