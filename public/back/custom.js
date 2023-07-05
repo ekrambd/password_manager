@@ -92,6 +92,28 @@ $(document).ready(function(){
        }
   });
 
+   $(document).on('click', '.delete-password', function(e){
+      e.preventDefault();
+      var int_password_id = $(this).data('id');
+      if(confirm('Do you want to delete this?'))
+       {
+          ajax_url = base_url+"/password/"+int_password_id;
+            $.ajax({
+
+                 url: ajax_url,
+                 type:"DELETE",
+                 dataType:"json",
+                 success:function(data) {
+                    toastr.success(data);
+
+                     $('.data-table').DataTable().ajax.reload(null, false);
+     
+                 },
+                        
+            });
+       }
+   });
+
    $(document).on('submit', '#2fa-submit', function(e){
      
       e.preventDefault();
@@ -105,7 +127,18 @@ $(document).ready(function(){
                  data:{'password_id':get_password_id, 'one_time_password': two_fa},
                  dataType:"json",
                  success:function(data) {
-                    console.log(data);
+                    if(data.status == true)
+                    {
+                        toastr.success(data.message);
+                        $('.2fa_code').val('');
+                        $('#google-2fa-body').html('');
+                        showCode(base_url,get_password_id);
+
+                    }
+                    else
+                    {
+                        toastr.error(data.message);
+                    }
      
                  },
                         
@@ -255,8 +288,45 @@ $(".password").on("focus keyup", function () {
         }
 });
  
-// $(".password").blur(function () {
-//         $("#pwd_strength_wrap").fadeOut(400);
-// });
+$(".password").blur(function () {
+        $("#pwd_strength_wrap").fadeOut(400);
+});
 
 });
+
+
+function showCode(base_url,get_password_id)
+{
+   $.ajax({
+
+                 url: base_url+"/show-password/"+get_password_id,
+                 type:"GET",
+                 dataType:"html",
+                 success:function(data) {
+                    $('#google-2fa-title').text('Successfully two-factor verified');
+                    
+                     $('#google-2fa-body').html(data);
+                 },
+                        
+            });
+}
+
+function copyToClipboard(elementId) {
+  // Create a "hidden" input
+  var aux = document.createElement("input");
+
+  // Assign it the value of the specified element
+  aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+
+  // Append it to the body
+  document.body.appendChild(aux);
+
+  // Highlight its content
+  aux.select();
+
+  // Copy the highlighted text
+  document.execCommand("copy");
+
+  // Remove it from the body
+  document.body.removeChild(aux);
+}

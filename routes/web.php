@@ -47,3 +47,5 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 //ajax requests
 Route::post('setup-2fa', [AjaxController::class, 'setupAuthenticator']);
 Route::post('2fa-verify', [AjaxController::class, 'twofaVerify']);
+
+Route::get('/show-password/{id}', [AjaxController::class, 'showPassword']);

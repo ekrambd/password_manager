@@ -6,6 +6,7 @@ use App\Models\Password;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePasswordRequest; 
 use DataTables;
+use Illuminate\Support\Facades\Crypt;
 class PasswordController extends Controller
 {
     /**
@@ -42,7 +43,7 @@ class PasswordController extends Controller
 
                                 
 
-                                  $btn .= ' <a href="#" class="btn btn-danger btn-sm delete-category action-button" data-id="'.$row->id.'">Delete</a>'; 
+                                  $btn .= ' <a href="#" class="btn btn-danger btn-sm delete-password action-button" data-id="'.$row->id.'">Delete</a>'; 
             
                                     return $btn;
                             })
@@ -86,8 +87,7 @@ class PasswordController extends Controller
             $password = new Password();
             $password->title = $request->title;
             $password->user_name = $request->user_name;
-            $password->general_password = $request->password;
-            $password->encrypt_password = bcrypt($request->password);
+            $password->encrypt_password = Crypt::encrypt($request->password);
             $password->save();
 
             storeCategories($request, $password);
@@ -152,6 +152,19 @@ class PasswordController extends Controller
      */
     public function destroy(Password $password)
     {
-        //
+        try
+        {
+            $password->delete();
+            return response()->json('Successfully password has been deleted');
+        }catch(Exception $e){
+                  
+                $message = $e->getMessage();
+      
+                $code = $e->getCode();       
+      
+                $string = $e->__toString();       
+                return response()->json(['message'=>$message, 'execption_code'=>$code, 'execption_string'=>$string]);
+                exit;
+        }
     }
 }

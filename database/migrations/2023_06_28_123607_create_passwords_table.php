@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('user_name');
             $table->string('general_password');
-            $table->string('encrypt_password');
+            $table->text('encrypt_password');
             $table->timestamps();
         });
     }

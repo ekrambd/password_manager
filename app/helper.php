@@ -2,6 +2,9 @@
  use App\Models\Category;
  use App\Models\GenerateKey;
  use Illuminate\Http\Request;
+ use App\Models\User;
+
+
  function categories()
  {
  	 $categories = Category::orderBy('id','DESC')->get();
@@ -39,4 +42,11 @@
  {
  	 $key = GenerateKey::findorfail(1);
  	 return $key;
+ }
+
+ function isAuthenticator($id)
+ {
+ 	  $user = User::findorfail($id);
+ 	  $user->is_authencticator = 1;
+ 	  $user->update();
  }
