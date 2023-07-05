@@ -16,7 +16,7 @@ class AjaxController extends Controller
     	{
     			$google2fa = app('pragmarx.google2fa');
          
-                 $key = $google2fa->generateSecretKey();
+                 $key = getKey()->generate_key;
 
                  generateKey($key);
             

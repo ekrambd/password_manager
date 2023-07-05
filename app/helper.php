@@ -27,8 +27,12 @@
  function generateKey($key)
  {
  	  $generat_key = GenerateKey::findorfail(1);
- 	  $generat_key->generate_key = $key;
- 	  $generat_key->update();
+ 	  if($generat_key == NULL)
+ 	  {
+ 	  	$generat_key->generate_key = $key;
+ 	     $generat_key->update();
+ 	  }
+ 	  
  }
 
  function getKey()
